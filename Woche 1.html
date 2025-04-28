@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Woche 1 - Datenbanksysteme &#8212; Geodatenbank für Indoor-Positionierung</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Woche 1';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Woche 3 - Konzeptionelle Modellierung mit UML" href="Woche%203.html" />
+    <link rel="prev" title="Willkommen im Modul G04: Geodatenbanken" href="Einleitung.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="Einleitung.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/bhtlogo.png" class="logo__image only-light" alt="Geodatenbank für Indoor-Positionierung - Home"/>
+    <script>document.write(`<img src="_static/bhtlogo.png" class="logo__image only-dark" alt="Geodatenbank für Indoor-Positionierung - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="Einleitung.html">
+                    Willkommen im Modul G04: Geodatenbanken
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Woche 1 - Datenbanksysteme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Woche%203.html">Woche 3 - Konzeptionelle Modellierung mit UML</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Woche%205.html">Woche 5 - Von UML zum logischen Modell</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Woche%207.html">Woche 7 - Modellierung von Geodaten in SQL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="herunterladen.html">Materialien herunterladen</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FWoche 1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Woche 1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Woche 1 - Datenbanksysteme</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geoinformationssysteme">1-1 Geoinformationssysteme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datenbanksysteme">1-2 Datenbanksysteme</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#was-ist-eine-geodatenbank">Was ist eine Geodatenbank?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vorteile-eines-datenbankmanagementsystems">1-2-1 Vorteile eines Datenbankmanagementsystems</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unterschiedliche-datenmodelle">1-3 Unterschiedliche Datenmodelle</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relationale-datenbanken">1-3-1 Relationale Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objektorientierte-datenbanken">1-3-2 Objektorientierte Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objektrelationale-datenbanken">1-3-3 Objektrelationale Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dokumentenorientierte-datenbanken">1-3-4 Dokumentenorientierte Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nosql-datenbanken">1-3-5 NoSQL-Datenbanken</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1-4- Datenbanksysteme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#begriffe-des-relationalen-datenbankmodells">1-5 Begriffe des relationalen Datenbankmodells</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aufgaben-eines-dbms">1-6 Aufgaben eines DBMS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datenintegration">Datenintegration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abfrage-und-datenbearbeitungssprache">Abfrage- und Datenbearbeitungssprache</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#schema-verwaltung">Schema-Verwaltung</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datenschutz">Datenschutz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mehrbenutzerbetrieb">Mehrbenutzerbetrieb</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konsistenzerhaltung">Konsistenzerhaltung</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transaktionen">Transaktionen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datensicherung">Datensicherung</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modellierung-raumlicher-daten">1-7 Modellierung räumlicher Daten</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anwendungsmodell">1-3-1 Anwendungsmodell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konzeptionelles-modell">1-3-2 Konzeptionelles Modell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logisches-modell">1-3-3 Logisches Modell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physikalisches-modell">1-3-4 Physikalisches Modell</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="woche-1-datenbanksysteme">
+<h1>Woche 1 - Datenbanksysteme<a class="headerlink" href="#woche-1-datenbanksysteme" title="Link to this heading">#</a></h1>
+<section id="geoinformationssysteme">
+<h2>1-1 Geoinformationssysteme<a class="headerlink" href="#geoinformationssysteme" title="Link to this heading">#</a></h2>
+<p>GIS sind Systeme zur Erfassung, Speicherung, Analyse und Darstellung von räumlichen Daten.</p>
+<p><strong>Hauptgeometrietypen in Geoinformationssystemen:</strong></p>
+<ul class="simple">
+<li><p><strong>Vektordaten</strong></p></li>
+</ul>
+<p>Punkt: Einzelne Objekte wie Messstationen oder Bäume</p>
+<p>Linie: Verbindungen wie Straßen oder Flüsse</p>
+<p>Fläche (Polygon): Abgegrenzte Gebiete wie Seen oder Grundstücke</p>
+<ul class="simple">
+<li><p><strong>Rasterdaten</strong>
+Regelmäßige Gitterstrukturen, etwa Luftbilder, Satellitenaufnahmen oder Höhendaten</p></li>
+</ul>
+<p><img alt="GIS" src="_images/gis_1.png" /></p>
+</section>
+<section id="datenbanksysteme">
+<h2>1-2 Datenbanksysteme<a class="headerlink" href="#datenbanksysteme" title="Link to this heading">#</a></h2>
+<section id="was-ist-eine-geodatenbank">
+<h3>Was ist eine Geodatenbank?<a class="headerlink" href="#was-ist-eine-geodatenbank" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Geodatenbank</strong> ist eine <strong>Datenbank</strong>, welche für die Verarbeitung von räumlichen Daten optimiert ist!</p></li>
+<li><p>Die Datenbank (DB) ist die Sammlung einheitlich beschriebener, persistent gespeicherter Daten.</p></li>
+<li><p>Das <strong>Datenbankmanagementsystem (DBMS)</strong> ist das Programm (Paket),<br />
+das die einheitliche Beschreibung, die sichere Verwaltung und die schnelle Abfrage der Datenbank ermöglicht.</p></li>
+</ul>
+<p><img alt="GIS" src="_images/gis_2.png" /></p>
+</section>
+<section id="vorteile-eines-datenbankmanagementsystems">
+<h3>1-2-1 Vorteile eines Datenbankmanagementsystems<a class="headerlink" href="#vorteile-eines-datenbankmanagementsystems" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Verringerung bzw. systematische Kontrolle von Redundanzen</p></li>
+<li><p>Konsistenzüberprüfung</p></li>
+<li><p>Zentrale Auswertungen</p></li>
+<li><p>Datenunabhängigkeit</p></li>
+<li><p>Unabhängigkeit vom Betriebssystem</p></li>
+<li><p>…</p></li>
+</ul>
+</section>
+</section>
+<section id="unterschiedliche-datenmodelle">
+<h2>1-3 Unterschiedliche Datenmodelle<a class="headerlink" href="#unterschiedliche-datenmodelle" title="Link to this heading">#</a></h2>
+<section id="relationale-datenbanken">
+<h3>1-3-1 Relationale Datenbanken<a class="headerlink" href="#relationale-datenbanken" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Erstmals wurde das Datenmodell 1970 von Edgar F. Codd (brit. Mathematiker bei IBM) vorgeschlagen.</p></li>
+<li><p>Tabellenbasiertes relationales Datenbankmodell.</p></li>
+<li><p>Eine Relation ist eine Beziehung, die zwischen zwei Dingen bestehen kann.</p></li>
+<li><p>Etablierter Standard für Datenbanken.</p></li>
+<li><p>Zum Abfragen und Manipulieren von Daten wird die Datenbanksprache <strong>SQL (Structured Query Language)</strong> eingesetzt.</p></li>
+</ul>
+<p><strong>Beispiele:</strong></p>
+<ul class="simple">
+<li><p>MySQL</p></li>
+<li><p>SQLite</p></li>
+<li><p>MS SQL Server</p></li>
+<li><p>DB2 (IBM)</p></li>
+</ul>
+<p><strong>Beispieltabellen für eine Veranstaltung:</strong></p>
+<ul class="simple">
+<li><p>Die Tabelle <code class="docutils literal notranslate"><span class="pre">show</span></code> enthält Informationen zur Veranstaltung.</p></li>
+<li><p>Der Veranstaltungsort ist in der Tabelle <code class="docutils literal notranslate"><span class="pre">venue</span></code> hinterlegt.</p></li>
+<li><p>In der Tabelle <code class="docutils literal notranslate"><span class="pre">geometry</span></code> liegen die Geometrien der Plätze auf dem Veranstaltungsgelände.</p></li>
+<li><p>Die Verknüpfung der Veranstaltung mit Plätzen erfolgt über <code class="docutils literal notranslate"><span class="pre">show_geometry</span></code> (n:m-Beziehung).</p></li>
+<li><p>Die Tabelle <code class="docutils literal notranslate"><span class="pre">person</span></code> speichert Personal, Helfer, Offizielle inkl. Zugangsdaten und -rechten.</p></li>
+<li><p>Aufgaben (Ordner, Wertungsrichter, …) werden in der Tabelle <code class="docutils literal notranslate"><span class="pre">job</span></code> abgelegt.</p></li>
+<li><p>Die Verknüpfung zwischen Veranstaltung, Person und Aufgabe wird in <code class="docutils literal notranslate"><span class="pre">show_person_job</span></code> realisiert (ebenfalls n:m-Beziehung).</p></li>
+</ul>
+</section>
+<section id="objektorientierte-datenbanken">
+<h3>1-3-2 Objektorientierte Datenbanken<a class="headerlink" href="#objektorientierte-datenbanken" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Daten werden als Objekte im Sinne der Objektorientierung verwaltet.</p></li>
+<li><p>Geringe Verbreitung.</p></li>
+</ul>
+<p><strong>Beispiele:</strong> db4o</p>
+</section>
+<section id="objektrelationale-datenbanken">
+<h3>1-3-3 Objektrelationale Datenbanken<a class="headerlink" href="#objektrelationale-datenbanken" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Bindeglied zwischen relationalen und objektorientierten Datenbanken.</p></li>
+</ul>
+<p><strong>Beispiele:</strong> PostgreSQL, Oracle Database</p>
+</section>
+<section id="dokumentenorientierte-datenbanken">
+<h3>1-3-4 Dokumentenorientierte Datenbanken<a class="headerlink" href="#dokumentenorientierte-datenbanken" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Dokumente bilden die Grundeinheit zur Speicherung der Daten.</p></li>
+<li><p>Kein festes Schema nötig.</p></li>
+<li><p>Speicherung strukturierter Daten (JSON, XML) und auch Binary Large Objects (Bilder, Videos).</p></li>
+</ul>
+<p><strong>Beispiele:</strong> Lotus Notes, CouchDB, MongoDB</p>
+</section>
+<section id="nosql-datenbanken">
+<h3>1-3-5 NoSQL-Datenbanken<a class="headerlink" href="#nosql-datenbanken" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>“Not only SQL”</p></li>
+<li><p>Können verschiedene Datenmodelle beinhalten:</p>
+<ul>
+<li><p>Key/Value-basiert</p></li>
+<li><p>Dokumentenbasiert</p></li>
+<li><p>Spaltenorientiert</p></li>
+<li><p>Graphenorientiert</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2>1-4- Datenbanksysteme<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>(Grafik mit <code class="docutils literal notranslate"><span class="pre">width:650px</span></code> hier einfügen, falls vorhanden.)</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Das <strong>DBMS</strong> ist der einzige Prozess, der unmittelbar auf die Dateien zugreifen und sie manipulieren darf.</p></li>
+</ul>
+</section>
+<section id="begriffe-des-relationalen-datenbankmodells">
+<h2>1-5 Begriffe des relationalen Datenbankmodells<a class="headerlink" href="#begriffe-des-relationalen-datenbankmodells" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Relationaler Begriff</p></th>
+<th class="head"><p>Alternativen</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Relation (relation)</p></td>
+<td><p>Tabelle (table)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tupel (tuple)</p></td>
+<td><p>Zeile (row), Datensatz (record)</p></td>
+</tr>
+<tr class="row-even"><td><p>Attribut (attribute)</p></td>
+<td><p>Spalte (column), Feld (field)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Datei (file)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Klasse (class)</p></td>
+<td><p>Objekt (object)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p>Eine klare Abgrenzung der Begriffe gibt es häufig nicht.</p></li>
+<li><p>Beispiel: Eine Zeile einer Tabelle wird oft auch als Datensatz bezeichnet.</p></li>
+<li><p>Die Summe aller Strukturinformationen (Tabellen, Schlüssel, Beziehungen, Indizes, …) wird als <strong>Datenbankschema</strong> bezeichnet.</p></li>
+<li><p><strong>Metadaten</strong> beschreiben die Struktur der tatsächlichen Daten.</p></li>
+</ul>
+</section>
+<section id="aufgaben-eines-dbms">
+<h2>1-6 Aufgaben eines DBMS<a class="headerlink" href="#aufgaben-eines-dbms" title="Link to this heading">#</a></h2>
+<section id="datenintegration">
+<h3>Datenintegration<a class="headerlink" href="#datenintegration" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Daten werden als Tupel in Relationen dargestellt.</p></li>
+<li><p>Relationen sind durch das Datenbankschema beschrieben.</p></li>
+<li><p>Auch Metadaten im Systemkatalog werden relational dargestellt.</p></li>
+</ul>
+</section>
+<section id="abfrage-und-datenbearbeitungssprache">
+<h3>Abfrage- und Datenbearbeitungssprache<a class="headerlink" href="#abfrage-und-datenbearbeitungssprache" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Das DBMS stellt eine Sprache zur Verfügung: <strong>Data Manipulation Language (DML)</strong>.</p></li>
+<li><p>SQL bietet Befehle wie <code class="docutils literal notranslate"><span class="pre">INSERT</span></code>, <code class="docutils literal notranslate"><span class="pre">SELECT</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> und <code class="docutils literal notranslate"><span class="pre">DELETE</span></code>.</p></li>
+<li><p><strong>Data Retrieval Language (DRL)</strong> bzw. <strong>Data Query Language (DQL)</strong> für SELECT-Anfragen.</p></li>
+</ul>
+</section>
+<section id="schema-verwaltung">
+<h3>Schema-Verwaltung<a class="headerlink" href="#schema-verwaltung" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Datenbankschema wird im Systemkatalog verwaltet.</p></li>
+<li><p>Anlegen und Ändern über <strong>Data Description Language (DDL)</strong> (<code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">DATABASE</span></code>, <code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">SCHEMA</span></code> in SQL).</p></li>
+</ul>
+</section>
+<section id="datenschutz">
+<h3>Datenschutz<a class="headerlink" href="#datenschutz" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Regelung von Zugriffsrechten.</p></li>
+<li><p>Verwaltung über <strong>Data Control Language (DCL)</strong> mit <code class="docutils literal notranslate"><span class="pre">GRANT</span></code> und <code class="docutils literal notranslate"><span class="pre">REVOKE</span></code>.</p></li>
+</ul>
+</section>
+<section id="mehrbenutzerbetrieb">
+<h3>Mehrbenutzerbetrieb<a class="headerlink" href="#mehrbenutzerbetrieb" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Datenbanken können von mehreren Benutzern gleichzeitig verwendet werden.</p></li>
+<li><p>Synchronisation der Transaktionen gewährleistet.</p></li>
+</ul>
+</section>
+<section id="konsistenzerhaltung">
+<h3>Konsistenzerhaltung<a class="headerlink" href="#konsistenzerhaltung" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Konsistente Daten = widerspruchsfreie Daten.</p></li>
+<li><p>Bedingungen sichern Konsistenz (z.B. durch <strong>Normalisierung</strong>).</p></li>
+</ul>
+</section>
+<section id="transaktionen">
+<h3>Transaktionen<a class="headerlink" href="#transaktionen" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Atomare Einheiten: vollständig oder gar nicht ausgeführt.</p></li>
+<li><p>Bei Abbruch: Rückführung in den Zustand vor der Transaktion (Rollback).</p></li>
+</ul>
+</section>
+<section id="datensicherung">
+<h3>Datensicherung<a class="headerlink" href="#datensicherung" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Systemausfälle führen zu Inkonsistenzen.</p></li>
+<li><p>Das DBMS sorgt dafür, dass die Daten wieder in einen konsistenten Zustand gebracht werden.</p></li>
+</ul>
+</section>
+</section>
+<section id="modellierung-raumlicher-daten">
+<h2>1-7 Modellierung räumlicher Daten<a class="headerlink" href="#modellierung-raumlicher-daten" title="Link to this heading">#</a></h2>
+<p>Eine zentrale Grafik zur Modellierung räumlicher Daten aus dem GIS-Kontext – basierend auf Bill (1999). Sie zeigt die verschiedenen Abstraktionsebenen von der realen Welt bis zur Speicherung in einem Computersystem.</p>
+<p><img alt="Bill" src="_images/bill.png" /></p>
+<section id="anwendungsmodell">
+<h3>1-3-1 Anwendungsmodell<a class="headerlink" href="#anwendungsmodell" title="Link to this heading">#</a></h3>
+<p><strong>Fragestellung:</strong> Welche Objekte der realen Welt sind für die Anwendung relevant?</p>
+<ul class="simple">
+<li><p>Auswahl kontextrelevanter Objekte der realen Welt</p></li>
+<li><p>Beispiel: Straßen, Gebäude, Flüsse, Grundstücke</p></li>
+</ul>
+</section>
+<section id="konzeptionelles-modell">
+<h3>1-3-2 Konzeptionelles Modell<a class="headerlink" href="#konzeptionelles-modell" title="Link to this heading">#</a></h3>
+<p><strong>Fragestellung:</strong> Wie werden die relevanten Objekte abstrakt beschrieben?</p>
+<ul class="simple">
+<li><p>Beschreibung des Modells durch:</p>
+<ul>
+<li><p>Klassen (z. B. Gebäude, Straße)</p></li>
+<li><p>Attribute (z. B. Höhe, Nutzung)</p></li>
+<li><p>Assoziationen (z. B. „liegt an“, „gehört zu“)</p></li>
+</ul>
+</li>
+<li><p>Ergebnis ist häufig ein UML-Diagramm</p></li>
+</ul>
+</section>
+<section id="logisches-modell">
+<h3>1-3-3 Logisches Modell<a class="headerlink" href="#logisches-modell" title="Link to this heading">#</a></h3>
+<p><strong>Fragestellung:</strong> Wie wird das konzeptionelle Modell technisch umgesetzt?</p>
+<ul class="simple">
+<li><p>Umsetzung z. B. in Tabellenstrukturen</p></li>
+<li><p>Festlegung von Datentypen:</p>
+<ul>
+<li><p>z. B. <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">text</span></code></p></li>
+<li><p>Attribut “Höhe” als <code class="docutils literal notranslate"><span class="pre">int</span></code> mit Wertebereich von −2³¹ bis 2³¹−1</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="physikalisches-modell">
+<h3>1-3-4 Physikalisches Modell<a class="headerlink" href="#physikalisches-modell" title="Link to this heading">#</a></h3>
+<p><strong>Fragestellung:</strong> Wie und wo werden die Daten gespeichert?</p>
+<ul class="simple">
+<li><p>Organisation der Daten auf Speichermedien:</p>
+<ul>
+<li><p>Festplatte, SSD, CD, Cloudspeicher etc.</p></li>
+</ul>
+</li>
+<li><p>Berücksichtigt Zugriffszeiten, Speicherformate, Indizes</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Einleitung.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Willkommen im Modul G04: Geodatenbanken</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Woche%203.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Woche 3 - Konzeptionelle Modellierung mit UML</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geoinformationssysteme">1-1 Geoinformationssysteme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datenbanksysteme">1-2 Datenbanksysteme</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#was-ist-eine-geodatenbank">Was ist eine Geodatenbank?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vorteile-eines-datenbankmanagementsystems">1-2-1 Vorteile eines Datenbankmanagementsystems</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unterschiedliche-datenmodelle">1-3 Unterschiedliche Datenmodelle</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relationale-datenbanken">1-3-1 Relationale Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objektorientierte-datenbanken">1-3-2 Objektorientierte Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objektrelationale-datenbanken">1-3-3 Objektrelationale Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dokumentenorientierte-datenbanken">1-3-4 Dokumentenorientierte Datenbanken</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nosql-datenbanken">1-3-5 NoSQL-Datenbanken</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1-4- Datenbanksysteme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#begriffe-des-relationalen-datenbankmodells">1-5 Begriffe des relationalen Datenbankmodells</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aufgaben-eines-dbms">1-6 Aufgaben eines DBMS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datenintegration">Datenintegration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abfrage-und-datenbearbeitungssprache">Abfrage- und Datenbearbeitungssprache</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#schema-verwaltung">Schema-Verwaltung</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datenschutz">Datenschutz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mehrbenutzerbetrieb">Mehrbenutzerbetrieb</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konsistenzerhaltung">Konsistenzerhaltung</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transaktionen">Transaktionen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#datensicherung">Datensicherung</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modellierung-raumlicher-daten">1-7 Modellierung räumlicher Daten</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#anwendungsmodell">1-3-1 Anwendungsmodell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#konzeptionelles-modell">1-3-2 Konzeptionelles Modell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logisches-modell">1-3-3 Logisches Modell</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#physikalisches-modell">1-3-4 Physikalisches Modell</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hossein Shoushtari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
