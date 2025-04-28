@@ -1,0 +1,12 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: Einleitung
+chapters:
+- file: Woche 1
+- file: Woche 3
+- file: Woche 5
+- file: Woche 7
+- file: Hausübungsblatt1
+
